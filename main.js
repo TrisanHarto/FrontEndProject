@@ -1,5 +1,8 @@
 
-async function googleNews() {
+
+async function googleNews(e) {
+    e.preventDefault()
+    let newsDataArray = []
     const newsKey = {
         method: 'GET',
         headers: {
@@ -8,11 +11,13 @@ async function googleNews() {
         }
     };
 	const newsResponse = await fetch(`https://google-news1.p.rapidapi.com/top-headlines?country=US&lang=en&limit=10`, newsKey)
-	const newsData = await newsResponse.json();
-	console.log(newsData)
+	const newsData = await newsResponse.json();	
+    newsDataArray.push(newsData.articles)
+    console.log(newsDataArray)
+    document.getElementsByClassName("info-container")[0].innerHTML =renderNews(newsDataArray)
 }
 
-googleNews()
+
 
 async function timeZone() {
     const timeKey = {
@@ -27,7 +32,7 @@ async function timeZone() {
 	console.log(timeData)
 }
 
-timeZone()
+
 
 
 
@@ -45,6 +50,23 @@ async function weather() {
 	console.log(weatherData)
 }
 
-weather()
+const searchForm = document.getElementById("search-form")
+searchForm.addEventListener("submit", googleNews)
+// searchForm.addEventListener("submit", timeZone)
+// searchForm.addEventListener("submit", weather)
 
+
+
+
+function renderNews(newsDataArray) {
+    
+    const newsArray = (newsDataArray).map(function(data){
+        return `
+        <div class="col-sm-4">
+        <li>${JSON.stringify(data[0])}</li>
+        </div>
+        `
+    })
+    return newsArray.join("")
+}
 
