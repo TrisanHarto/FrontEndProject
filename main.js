@@ -11,18 +11,10 @@ async function googleNews(e) {
     };
 	const newsResponse = await fetch(`https://google-news1.p.rapidapi.com/top-headlines?country=${dropDown}&lang=en&limit=10`, newsKey)
 	const newsData = await newsResponse.json();	
-<<<<<<< HEAD
-	const newsArticles = newsData.articles.map((article) => {
-		return {title: article.title, link: article.link}
-		  })
-		console.log(newsArticles);
-    //document.getElementsByClassName("info-container")[0].innerHTML =renderNews(newsData.articles)
-=======
     const newsArticles = newsData.articles.map((article) => {
         return {Title: article.title, Link: article.link}
           })
     document.getElementsByClassName("info-container")[0].innerHTML =renderNews(newsArticles)
->>>>>>> main
 }
 
 
