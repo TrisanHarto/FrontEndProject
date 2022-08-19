@@ -1,5 +1,4 @@
-// ***IGNORE*** $(document).ready(function() {
-// 	***IGNORE*** $("#submitButton").click(function() {
+
 		let countryCode = $("#countryCode").val();
 		async function getNews() {
 		const newsKey = {
@@ -11,12 +10,30 @@
     			};
 			const response = await fetch(`https://google-news1.p.rapidapi.com/top-headlines?country=${countryCode}&lang=en&limit=10`, newsKey);
 			const data = await response.json();
-			let newsArticles = Object.values(data.articles); // variable to return articles and their information
+			let news = Object.values(data.articles); // variable to return articles and their information
+			console.log(news);
+			const newsArticles = data.articles.map((article) => {
+			return {title: article.title, link: article.link}
+ 			 })
 			console.log(newsArticles);
+			
 			}
+			
 		getNews();
-	// ***IGNORE*** });
-// ***IGNORE*** });
+
+
+function renderNews(newsDataArray) {
+    
+    const newsArray = (newsDataArray).map(function(data){
+        return `
+        <div class="col-sm-4">
+        <li>${JSON.stringify(data[0])}</li>
+        </div>
+        `
+    })
+    return newsArray.join("")}
+
+
 async function timeZone() {
     const timeKey = {
         method: 'GET',
@@ -27,13 +44,16 @@ async function timeZone() {
     };
 	const timeResponse = await fetch("https://weatherapi-com.p.rapidapi.com/timezone.json?q=London%20GB", timeKey)
 	const timeData = await timeResponse.json();
-	//console.log(timeData);
-	// the below returns City, Country and local time
-	console.log(timeData.location.name);
-	console.log(timeData.location.country);
-	console.log(timeData.location.localtime);
+	const timeZone = timeData.map(() => {
+		return {name, country, localtime}
+		  });
+		console.log(timeZone);
 }
-
+//console.log(timeData);
+	// the below returns City, Country and local time
+	// console.log(timeData.location.name);
+	// console.log(timeData.location.country);
+	// console.log(timeData.location.localtime);
 timeZone()
 
 
