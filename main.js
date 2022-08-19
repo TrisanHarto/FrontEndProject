@@ -1,8 +1,7 @@
 
-
 async function googleNews(e) {
     e.preventDefault()
-    let newsDataArray = []
+    const dropDown = document.getElementById("countries").value 
     const newsKey = {
         method: 'GET',
         headers: {
@@ -10,11 +9,9 @@ async function googleNews(e) {
             'X-RapidAPI-Host': 'google-news1.p.rapidapi.com'
         }
     };
-	const newsResponse = await fetch(`https://google-news1.p.rapidapi.com/top-headlines?country=US&lang=en&limit=10`, newsKey)
+	const newsResponse = await fetch(`https://google-news1.p.rapidapi.com/top-headlines?country=${dropDown}&lang=en&limit=10`, newsKey)
 	const newsData = await newsResponse.json();	
-    newsDataArray.push(newsData.articles)
-    console.log(newsDataArray)
-    document.getElementsByClassName("info-container")[0].innerHTML =renderNews(newsDataArray)
+    document.getElementsByClassName("info-container")[0].innerHTML =renderNews(newsData.articles)
 }
 
 
@@ -31,9 +28,6 @@ async function timeZone() {
 	const timeData = await timeResponse.json();
 	console.log(timeData)
 }
-
-
-
 
 
 async function weather() {
@@ -56,17 +50,28 @@ searchForm.addEventListener("submit", googleNews)
 // searchForm.addEventListener("submit", weather)
 
 
+// function createCountryList(list) {
+//     document.getElementById("countries").innerHTML = `
+//     <option> </option>
+//     ${Object.keys(list).map(function(countrylist) {
+//         return `<option value=${countrylist}>${countrylist}</option>`
+//     }).join("")}  
+//   </select>
+//     `
+// }
+
 
 
 function renderNews(newsDataArray) {
-    
-    const newsArray = (newsDataArray).map(function(data){
+   
+    const newsArray = newsDataArray.map(function(data){
+        console.log(data)
+        const info = JSON.stringify(data)
         return `
-        <div class="col-sm-4">
-        <li>${JSON.stringify(data[0])}</li>
+        <div class="col">
+        <li>${info}</li>
         </div>
         `
     })
     return newsArray.join("")
 }
-
