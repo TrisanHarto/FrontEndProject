@@ -1,37 +1,19 @@
 
-		let countryCode = $("#countryCode").val();
-		async function getNews() {
-		const newsKey = {
-				method: 'GET',
-        		headers: {
-					'X-RapidAPI-Key': 'de4299dbc8mshebf85f46aa18f61p113476jsne430c829d59e',
-            		'X-RapidAPI-Host': 'google-news1.p.rapidapi.com'
-        			}
-    			};
-			const response = await fetch(`https://google-news1.p.rapidapi.com/top-headlines?country=${countryCode}&lang=en&limit=10`, newsKey);
-			const data = await response.json();
-			let news = Object.values(data.articles); // variable to return articles and their information
-			console.log(news);
-			const newsArticles = data.articles.map((article) => {
-			return {title: article.title, link: article.link}
- 			 })
-			console.log(newsArticles);
-			
-			}
-			
-		getNews();
+async function googleNews(e) {
+    e.preventDefault()
+    const dropDown = document.getElementById("countries").value 
+    const newsKey = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': 'de4299dbc8mshebf85f46aa18f61p113476jsne430c829d59e',
+            'X-RapidAPI-Host': 'google-news1.p.rapidapi.com'
+        }
+    };
+	const newsResponse = await fetch(`https://google-news1.p.rapidapi.com/top-headlines?country=${dropDown}&lang=en&limit=10`, newsKey)
+	const newsData = await newsResponse.json();	
+    document.getElementsByClassName("info-container")[0].innerHTML =renderNews(newsData.articles)
+}
 
-
-function renderNews(newsDataArray) {
-    
-    const newsArray = (newsDataArray).map(function(data){
-        return `
-        <div class="col-sm-4">
-        <li>${JSON.stringify(data[0])}</li>
-        </div>
-        `
-    })
-    return newsArray.join("")}
 
 
 async function timeZone() {
@@ -44,18 +26,8 @@ async function timeZone() {
     };
 	const timeResponse = await fetch("https://weatherapi-com.p.rapidapi.com/timezone.json?q=London%20GB", timeKey)
 	const timeData = await timeResponse.json();
-	const timeZone = timeData.map(() => {
-		return {name, country, localtime}
-		  });
-		console.log(timeZone);
+	console.log(timeData)
 }
-//console.log(timeData);
-	// the below returns City, Country and local time
-	// console.log(timeData.location.name);
-	// console.log(timeData.location.country);
-	// console.log(timeData.location.localtime);
-timeZone()
-
 
 
 async function weather() {
@@ -69,14 +41,37 @@ async function weather() {
 
 	const weatherResponse = await fetch("https://weatherapi-com.p.rapidapi.com/current.json?q=London%3AGB", weatherKey)
 	const weatherData = await weatherResponse.json();
-	//console.log(weatherData)
-	// the below returns Celcius and Fahrenheit
-	console.log(weatherData.current.temp_c);
-	console.log(weatherData.current.temp_f);
-
-
+	console.log(weatherData)
 }
 
-weather()
+const searchForm = document.getElementById("search-form")
+searchForm.addEventListener("submit", googleNews)
+// searchForm.addEventListener("submit", timeZone)
+// searchForm.addEventListener("submit", weather)
 
 
+// function createCountryList(list) {
+//     document.getElementById("countries").innerHTML = `
+//     <option> </option>
+//     ${Object.keys(list).map(function(countrylist) {
+//         return `<option value=${countrylist}>${countrylist}</option>`
+//     }).join("")}  
+//   </select>
+//     `
+// }
+
+
+
+function renderNews(newsDataArray) {
+   
+    const newsArray = newsDataArray.map(function(data){
+        console.log(data)
+        const info = JSON.stringify(data)
+        return `
+        <div class="col">
+        <li>${info}</li>
+        </div>
+        `
+    })
+    return newsArray.join("")
+}
