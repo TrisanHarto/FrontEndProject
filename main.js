@@ -17,28 +17,16 @@ async function googleNews(e) {
     };
 	const newsResponse = await fetch(`https://google-news1.p.rapidapi.com/geolocation?geo=$${cityInput}&country=${dropDown}&lang=en&limit=10`, newsKey)
 	const newsData = await newsResponse.json();	
-    const newsArticles = newsData.articles.map((article) => {
-        return {Title: article.title, Link: article.link}
-          })
-    document.getElementsByClassName("info-container")[0].innerHTML =renderNews(newsArticles)
-}
-
-
-function renderNews(newsDataArray) {
+    console.log(newsData)
+    newsData.articles.forEach((article, i) => {
    
-    const newsArray = newsDataArray.map(function(data){
-        console.log(data)
-        const info = JSON.stringify(data)
-        return `
+        document.getElementsByClassName("info-container")[i].innerHTML += `
         <div class="info-container">
         <div class="col h3">
-        <li>${info}</li>
+        <li>${"Title: " + article.title + "<br>" + "Link: " + article.link}</li>
         </div>
-          <div class="info">
-        
         `
-    })
-    return newsArray.join("")
+          })
 }
 
 
@@ -54,25 +42,19 @@ async function timeZone() {
     };
 	const timeResponse = await fetch(`https://weatherapi-com.p.rapidapi.com/timezone.json?q=${cityInput}%20${dropDown}`, timeKey)
 	const timeData = await timeResponse.json();
-    const currentTime = function timeDetail() {
-        return {LocalTime: timeData.location.localtime, City: timeData.location.name, Country: timeData.location.country}
-        
-    }
-    document.getElementsByClassName("location-time")[0].innerHTML = renderTimeZone(currentTime())
-    // console.log(currentTime());
-    // console.log(timeData);
-    // console.log(timeData.location.localtime);
-    // console.log(timeData.location.name);
-	// console.log(timeData.location.country)
+
+    document.getElementsByClassName("location-time")[0].innerHTML = renderTimeZone(timeData)
+  
 }
 
 function renderTimeZone(currentTime) {
-    const timeInfo = JSON.stringify(currentTime) 
-    return `
-        <div class="col h1">
-        <li>${timeInfo}</li>
-        </div>
-    `
+     
+        return `
+            <div class="col">
+            <h1>${currentTime.location.name + ", "  + currentTime.location.country + "<br>" + currentTime.location.localtime }<h1>
+            </div>
+        `
+   
 }
 
 async function weather() {
@@ -88,21 +70,14 @@ async function weather() {
 
 	const weatherResponse = await fetch(`https://weatherapi-com.p.rapidapi.com/current.json?q=${cityInput}%3A${dropDown}`, weatherKey)
 	const weatherData = await weatherResponse.json();
-    const currentWeather = function weatherDetail() {
-        return {C: weatherData.current.temp_c, F: weatherData.current.temp_f}
-        
-    }
-    document.getElementsByClassName("location-weather")[0].innerHTML = renderWeather(currentWeather())
-	console.log(currentWeather());
-    // console.log(weatherData.current.temp_c);
-	// console.log(weatherData.current.temp_f);
+    document.getElementsByClassName("location-weather")[0].innerHTML = renderWeather(weatherData)
+	
 }
 
 function renderWeather(currentWeather) {
-    const weatherInfo = JSON.stringify(currentWeather) 
     return `
-        <div class="col h1">
-        <li>${weatherInfo}</li>
+        <div class="col ">
+        <h1>${"C: " + currentWeather.current.temp_c + "<br>" + "F: " + currentWeather.current.temp_f}</h1>
         </div>
         
     `
