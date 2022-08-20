@@ -107,4 +107,3 @@ function renderWeather(currentWeather) {
         
     `
 }
-
