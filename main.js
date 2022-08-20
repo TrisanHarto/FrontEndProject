@@ -11,7 +11,10 @@ async function googleNews(e) {
     };
 	const newsResponse = await fetch(`https://google-news1.p.rapidapi.com/top-headlines?country=${dropDown}&lang=en&limit=10`, newsKey)
 	const newsData = await newsResponse.json();	
-    document.getElementsByClassName("info-container")[0].innerHTML =renderNews(newsData.articles)
+    const newsArticles = newsData.articles.map((article) => {
+        return {Title: article.title, Link: article.link}
+          })
+    document.getElementsByClassName("info-container")[0].innerHTML =renderNews(newsArticles)
 }
 
 
@@ -26,9 +29,19 @@ async function timeZone() {
     };
 	const timeResponse = await fetch("https://weatherapi-com.p.rapidapi.com/timezone.json?q=London%20GB", timeKey)
 	const timeData = await timeResponse.json();
-	console.log(timeData)
+    const currentTime = function timeDetail() {
+        return {LocalTime: timeData.location.localtime, City: timeData.location.name, Country: timeData.location.country}
+        
+    }
+    
+    console.log(currentTime());
+    // console.log(timeData);
+    // console.log(timeData.location.localtime);
+    // console.log(timeData.location.name);
+	// console.log(timeData.location.country)
 }
 
+console.log(timeZone())
 
 async function weather() {
 	const weatherKey = {
@@ -41,8 +54,16 @@ async function weather() {
 
 	const weatherResponse = await fetch("https://weatherapi-com.p.rapidapi.com/current.json?q=London%3AGB", weatherKey)
 	const weatherData = await weatherResponse.json();
-	console.log(weatherData)
+    const currentWeather = function weatherDetail() {
+        return {C: weatherData.current.temp_c, F: weatherData.current.temp_f}
+        
+    }
+	console.log(currentWeather());
+    // console.log(weatherData.current.temp_c);
+	// console.log(weatherData.current.temp_f);
 }
+
+console.log(weather())
 
 const searchForm = document.getElementById("search-form")
 searchForm.addEventListener("submit", googleNews)
