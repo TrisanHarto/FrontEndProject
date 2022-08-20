@@ -7,6 +7,7 @@ searchForm.addEventListener("submit", weather)
 async function googleNews(e) {
     e.preventDefault()
     const dropDown = document.getElementById("countries").value 
+    const cityInput = document.getElementById("cities").value
     const newsKey = {
         method: 'GET',
         headers: {
@@ -14,7 +15,7 @@ async function googleNews(e) {
             'X-RapidAPI-Host': 'google-news1.p.rapidapi.com'
         }
     };
-	const newsResponse = await fetch(`https://google-news1.p.rapidapi.com/top-headlines?country=${dropDown}&lang=en&limit=10`, newsKey)
+	const newsResponse = await fetch(`https://google-news1.p.rapidapi.com/geolocation?geo=$${cityInput}&country=${dropDown}&lang=en&limit=10`, newsKey)
 	const newsData = await newsResponse.json();	
     const newsArticles = newsData.articles.map((article) => {
         return {Title: article.title, Link: article.link}
@@ -42,6 +43,8 @@ function renderNews(newsDataArray) {
 
 
 async function timeZone() {
+    const dropDown = document.getElementById("countries").value 
+    const cityInput = document.getElementById("cities").value
     const timeKey = {
         method: 'GET',
         headers: {
@@ -49,7 +52,7 @@ async function timeZone() {
             'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
         }
     };
-	const timeResponse = await fetch("https://weatherapi-com.p.rapidapi.com/timezone.json?q=London%20GB", timeKey)
+	const timeResponse = await fetch(`https://weatherapi-com.p.rapidapi.com/timezone.json?q=${cityInput}%20${dropDown}`, timeKey)
 	const timeData = await timeResponse.json();
     const currentTime = function timeDetail() {
         return {LocalTime: timeData.location.localtime, City: timeData.location.name, Country: timeData.location.country}
@@ -73,6 +76,8 @@ function renderTimeZone(currentTime) {
 }
 
 async function weather() {
+    const dropDown = document.getElementById("countries").value 
+    const cityInput = document.getElementById("cities").value
 	const weatherKey = {
 		method: 'GET',
 		headers: {
@@ -81,7 +86,7 @@ async function weather() {
 		}
 	};
 
-	const weatherResponse = await fetch("https://weatherapi-com.p.rapidapi.com/current.json?q=London%3AGB", weatherKey)
+	const weatherResponse = await fetch(`https://weatherapi-com.p.rapidapi.com/current.json?q=${cityInput}%3A${dropDown}`, weatherKey)
 	const weatherData = await weatherResponse.json();
     const currentWeather = function weatherDetail() {
         return {C: weatherData.current.temp_c, F: weatherData.current.temp_f}
