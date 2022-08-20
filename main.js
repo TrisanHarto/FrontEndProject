@@ -1,3 +1,8 @@
+const searchForm = document.getElementById("search-form")
+searchForm.addEventListener("submit", googleNews)
+searchForm.addEventListener("submit", timeZone)
+searchForm.addEventListener("submit", weather)
+
 
 async function googleNews(e) {
     e.preventDefault()
@@ -18,6 +23,23 @@ async function googleNews(e) {
 }
 
 
+function renderNews(newsDataArray) {
+   
+    const newsArray = newsDataArray.map(function(data){
+        console.log(data)
+        const info = JSON.stringify(data)
+        return `
+        <div class="info-container">
+        <div class="col h3">
+        <li>${info}</li>
+        </div>
+          <div class="info">
+        
+        `
+    })
+    return newsArray.join("")
+}
+
 
 async function timeZone() {
     const timeKey = {
@@ -33,15 +55,22 @@ async function timeZone() {
         return {LocalTime: timeData.location.localtime, City: timeData.location.name, Country: timeData.location.country}
         
     }
-    
-    console.log(currentTime());
+    document.getElementsByClassName("location-time")[0].innerHTML = renderTimeZone(currentTime())
+    // console.log(currentTime());
     // console.log(timeData);
     // console.log(timeData.location.localtime);
     // console.log(timeData.location.name);
 	// console.log(timeData.location.country)
 }
 
-console.log(timeZone())
+function renderTimeZone(currentTime) {
+    const timeInfo = JSON.stringify(currentTime) 
+    return `
+        <div class="col h1">
+        <li>${timeInfo}</li>
+        </div>
+    `
+}
 
 async function weather() {
 	const weatherKey = {
@@ -58,41 +87,19 @@ async function weather() {
         return {C: weatherData.current.temp_c, F: weatherData.current.temp_f}
         
     }
+    document.getElementsByClassName("location-weather")[0].innerHTML = renderWeather(currentWeather())
 	console.log(currentWeather());
     // console.log(weatherData.current.temp_c);
 	// console.log(weatherData.current.temp_f);
 }
 
-console.log(weather())
-
-const searchForm = document.getElementById("search-form")
-searchForm.addEventListener("submit", googleNews)
-// searchForm.addEventListener("submit", timeZone)
-// searchForm.addEventListener("submit", weather)
-
-
-// function createCountryList(list) {
-//     document.getElementById("countries").innerHTML = `
-//     <option> </option>
-//     ${Object.keys(list).map(function(countrylist) {
-//         return `<option value=${countrylist}>${countrylist}</option>`
-//     }).join("")}  
-//   </select>
-//     `
-// }
-
-
-
-function renderNews(newsDataArray) {
-   
-    const newsArray = newsDataArray.map(function(data){
-        console.log(data)
-        const info = JSON.stringify(data)
-        return `
-        <div class="col">
-        <li>${info}</li>
+function renderWeather(currentWeather) {
+    const weatherInfo = JSON.stringify(currentWeather) 
+    return `
+        <div class="col h1">
+        <li>${weatherInfo}</li>
         </div>
-        `
-    })
-    return newsArray.join("")
+        
+    `
 }
+
