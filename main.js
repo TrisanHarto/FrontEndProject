@@ -30,7 +30,7 @@ function renderNews(newsDataArray) {
         const info = JSON.stringify(data)
         return `
         <div class="info-container">
-        <div class="col">
+        <div class="col h3">
         <li>${info}</li>
         </div>
           <div class="info">
@@ -66,11 +66,9 @@ async function timeZone() {
 function renderTimeZone(currentTime) {
     const timeInfo = JSON.stringify(currentTime) 
     return `
-
-        <div class="col">
+        <div class="col h1">
         <li>${timeInfo}</li>
         </div>
-        
     `
 }
 
@@ -98,7 +96,7 @@ async function weather() {
 function renderWeather(currentWeather) {
     const weatherInfo = JSON.stringify(currentWeather) 
     return `
-        <div class="col">
+        <div class="col h1">
         <li>${weatherInfo}</li>
         </div>
         
