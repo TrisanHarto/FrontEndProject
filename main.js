@@ -19,17 +19,14 @@ async function googleNews(e) {
 	const newsData = await newsResponse.json();	
     console.log(newsData)
     newsData.articles.forEach((article, i) => {
-   
         document.getElementsByClassName("info-container")[i].innerHTML += `
         <div class="info-container">
         <div class="col h3">
-        <li>${"Title: " + article.title + "<br>" + "Link: " + article.link}</li>
+        <li>${"Title: " + article.title.link(article.link)}</li>
         </div>
         `
           })
 }
-
-
 async function timeZone() {
     const dropDown = document.getElementById("countries").value 
     const cityInput = document.getElementById("cities").value
