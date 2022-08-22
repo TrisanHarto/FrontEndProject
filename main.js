@@ -15,15 +15,13 @@ async function googleNews(e) {
             'X-RapidAPI-Host': 'google-news1.p.rapidapi.com'
         }
     };
-	const newsResponse = await fetch(`https://google-news1.p.rapidapi.com/geolocation?geo=$${cityInput}&country=${dropDown}&lang=en&limit=10`, newsKey)
+	const newsResponse = await fetch(`https://google-news1.p.rapidapi.com/geolocation?geo=$${cityInput}&country=US&lang=en&limit=10`, newsKey)
 	const newsData = await newsResponse.json();	
     console.log(newsData)
+    document.getElementById("info").innerHTML = ""
     newsData.articles.forEach((article, i) => {
-        document.getElementsByClassName("info-container")[i].innerHTML += `
-        <div class="info-container">
-        <div class="col h3">
-        <li>${"Title: " + article.title.link(article.link)}</li>
-        </div>
+        document.getElementById("info").innerHTML += `
+        <li>${article.title.link(article.link)}</li>
         `
           })
 }
@@ -41,7 +39,6 @@ async function timeZone() {
 	const timeData = await timeResponse.json();
 
     document.getElementsByClassName("location-time")[0].innerHTML = renderTimeZone(timeData)
-  
 }
 
 function renderTimeZone(currentTime) {
@@ -53,6 +50,7 @@ function renderTimeZone(currentTime) {
         `
    
 }
+
 
 async function weather() {
     const dropDown = document.getElementById("countries").value 
