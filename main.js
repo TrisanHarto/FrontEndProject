@@ -48,9 +48,7 @@ async function timeZone() {
 function renderTimeZone(currentTime) {
      
         return `
-            <div class="location-time col row">
             <h1>${currentTime.location.name + ", "  + currentTime.location.country + "<br>" + currentTime.location.localtime }<h1>
-            </div>
         `
    
 }
