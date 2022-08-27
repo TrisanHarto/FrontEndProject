@@ -26,15 +26,11 @@ async function googleNews() {
 	const newsData = await newsResponse.json();
 	console.log(newsData);
 	document.getElementById("info").innerHTML = "<h2>Current News - Top 15</h2>";
-	const newsTab = newsData.articles.forEach((article) => {
+	newsData.articles.forEach((article) => {
 		document.getElementById("info").innerHTML += `
         <h3><a href=${article.link} target="_blank">${article.title}</a></h3>
         `;
 	});
-	// let newTab = document.getElementById("info");
-	// newTab.addEventListener("click", function () {
-	// 	window.open(aaa, "_blank");
-	// });
 }
 
 async function timeZone() {
@@ -56,7 +52,6 @@ async function timeZone() {
 	document.getElementsByClassName("location-time")[0].innerHTML =
 		renderTimeZone(timeData);
 }
-
 
 function renderTimeZone(currentTime) {
 	return `
@@ -94,7 +89,6 @@ async function weather() {
 	document.getElementsByClassName("location-weather")[0].innerHTML =
 		renderWeather(weatherData);
 }
-
 
 function renderWeather(currentWeather) {
 	return `
