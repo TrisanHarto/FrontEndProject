@@ -53,19 +53,6 @@ async function timeZone() {
 		renderTimeZone(timeData);
 }
 
-// function renderTimeZone(currentTime) {
-// 	return `
-//             <h1>${
-// 							"Local Date/Time" +
-// 							"<br>" +
-// 							currentTime.location.name +
-// 							", " +
-// 							currentTime.location.country +
-// 							"<br>" +
-// 							currentTime.location.localtime
-// 						}<h1>
-//         `;
-// }
 
 function renderTimeZone(currentTime) {
 	return `
