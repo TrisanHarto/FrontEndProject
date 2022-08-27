@@ -26,11 +26,15 @@ async function googleNews() {
 	const newsData = await newsResponse.json();
 	console.log(newsData);
 	document.getElementById("info").innerHTML = "<h2>Current News - Top 15</h2>";
-	newsData.articles.forEach((article) => {
+	const newsTab = newsData.articles.forEach((article) => {
 		document.getElementById("info").innerHTML += `
-        <h3>${article.title.link(article.link)}</h3>
+        <h3><a href=${article.link} target="_blank">${article.title}</a></h3>
         `;
 	});
+	// let newTab = document.getElementById("info");
+	// newTab.addEventListener("click", function () {
+	// 	window.open(aaa, "_blank");
+	// });
 }
 
 async function timeZone() {
