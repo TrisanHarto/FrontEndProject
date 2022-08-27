@@ -53,17 +53,33 @@ async function timeZone() {
 		renderTimeZone(timeData);
 }
 
+// function renderTimeZone(currentTime) {
+// 	return `
+//             <h1>${
+// 							"Local Date/Time" +
+// 							"<br>" +
+// 							currentTime.location.name +
+// 							", " +
+// 							currentTime.location.country +
+// 							"<br>" +
+// 							currentTime.location.localtime
+// 						}<h1>
+//         `;
+// }
+
 function renderTimeZone(currentTime) {
 	return `
-            <h1>${
-							"Local Date/Time" +
-							"<br>" +
-							currentTime.location.name +
-							", " +
-							currentTime.location.country +
-							"<br>" +
-							currentTime.location.localtime
-						}<h1>
+            <h1>
+				Local Date/Time
+			</h1>
+            <h2>
+                ${currentTime.location.name}, 
+				${currentTime.location.country} 
+				<br>
+				${currentTime.location.localtime}
+					
+            </h2>
+					
         `;
 }
 
@@ -88,17 +104,19 @@ async function weather() {
 		renderWeather(weatherData);
 }
 
+
 function renderWeather(currentWeather) {
 	return `
-        <h1>${
-					"Current Temperature" +
-					"<br>" +
-					"Celsius: " +
-					currentWeather.current.temp_c +
-					"<br>" +
-					"Fahrenheit: " +
-					currentWeather.current.temp_f
-				}</h1>
-
+        <h1>
+			Current Temperature
+        </h1>
+        <h2>
+            Celsius: 
+			${currentWeather.current.temp_c} 
+            <br>
+			Fahrenheit: 
+			${currentWeather.current.temp_f}
+        </h2>
+			
     `;
 }
