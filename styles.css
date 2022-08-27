@@ -31,4 +31,8 @@ select {
 #results {
 	display: none;
 }
+
+h1 {
+	text-decoration: underline;
+}
 /* --------------------------------------------- */
